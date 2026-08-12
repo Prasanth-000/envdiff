@@ -33,7 +33,7 @@ dev = [
 ]
 
 [project.scripts]
-envdiff = "envdiff.cli:main"
+envdiff = "envdiff.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/Prasanth-000/envdiff"

@@ -60,7 +60,7 @@ def main(
     source_b: str = typer.Argument(
         ..., help="Target source: .env file, shell text file, or .env dir."
     ),
-    type: str = typer.Option(
+    mode: str = typer.Option(
         "file:file",
         "--type",
         "-t",
@@ -81,13 +81,17 @@ def main(
 ) -> None:
     """Detect environment-variable drift between two sources in one command."""
     color = not no_color
-    source_type = _resolve_source_type(type)
+    source_type = _resolve_source_type(mode)
 
     left = _load_left(source_a, source_type)
     right = _load_right(source_b, source_type)
     result = compute_diff(left, right)
 
-    write_terminal(format_terminal_table(result, color=color), color=color)
+    json_to_stdout = json_path is not None and str(json_path) == "-"
+    # When JSON is written to stdout, suppress the human table so the
+    # machine output stays clean and pipe-friendly (e.g. `... | jq`).
+    if not json_to_stdout:
+        write_terminal(format_terminal_table(result, color=color), color=color)
 
     if json_path is not None:
         write_json_file(json_path, format_json(result))
@@ -96,4 +100,4 @@ def main(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    main()
+    app()

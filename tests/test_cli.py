@@ -23,15 +23,22 @@ def test_cli_file_file_basic(tmp_path):
     assert "~ Y: 2  ->  20" in result.stdout
 
 
-def test_cli_json_stdout(tmp_path):
+def test_cli_json_stdout_is_clean(tmp_path):
+    # When --json - writes to stdout, the human table must NOT also print.
     a = tmp_path / "a.env"
     b = tmp_path / "b.env"
     _write(a, "X=1\n")
-    _write(b, "X=1\nY=2\n")
-    result = runner.invoke(app, [str(a), str(b), "--json", "-"])
+    _write(b, "X=2\n")
+    result = runner.invoke(app, [str(a), str(b), "--json", "-", "--no-color"])
     assert result.exit_code == 0
-    assert '"added"' in result.stdout
-    assert '"Y"' in result.stdout
+    out = result.stdout
+    # Terminal table header must be absent when JSON goes to stdout.
+    assert "envdiff — environment drift report" not in out
+    # Output must be valid, jq-parseable JSON only.
+    import json
+
+    data = json.loads(out)
+    assert data["changed"] == {"X": {"old": "1", "new": "2"}}
 
 
 def test_cli_json_file(tmp_path):
