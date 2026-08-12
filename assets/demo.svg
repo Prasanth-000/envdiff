@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="Menlo, Consolas, monospace">
+  <rect width="720" height="420" fill="#0b1021"/>
+  <rect x="0" y="0" width="720" height="34" fill="#11183a"/>
+  <circle cx="18" cy="17" r="6" fill="#ff5f56"/>
+  <circle cx="38" cy="17" r="6" fill="#ffbd2e"/>
+  <circle cx="58" cy="17" r="6" fill="#27c93f"/>
+  <text x="80" y="22" fill="#7f8bb5" font-size="13">zsh — envdiff</text>
+
+  <text x="20" y="64" fill="#7fd1ff" font-size="14">$ envdiff .env .env.production</text>
+
+  <text x="20" y="100" fill="#e6ecff" font-size="14">envdiff — environment drift report</text>
+  <text x="20" y="126" fill="#7f8bb5" font-size="14">&#160;</text>
+  <text x="20" y="150" fill="#27c93f" font-size="14">  + ADDED    : 1</text>
+  <text x="20" y="174" fill="#ff5f56" font-size="14">  - REMOVED  : 1</text>
+  <text x="20" y="198" fill="#ffbd2e" font-size="14">  ~ CHANGED  : 1</text>
+  <text x="20" y="222" fill="#7fd1ff" font-size="14">  = UNCHANGED: 2</text>
+
+  <text x="20" y="256" fill="#27c93f" font-size="14">ADDED:</text>
+  <text x="40" y="256" fill="#e6ecff" font-size="14">  + NEW_FEATURE_FLAG=on</text>
+
+  <text x="20" y="284" fill="#ff5f56" font-size="14">REMOVED:</text>
+  <text x="40" y="284" fill="#e6ecff" font-size="14">  - LEGACY_TOKEN=abc123</text>
+
+  <text x="20" y="312" fill="#ffbd2e" font-size="14">CHANGED:</text>
+  <text x="40" y="312" fill="#e6ecff" font-size="14">  ~ API_URL: https://staging  -&gt;  https://prod</text>
+
+  <text x="20" y="360" fill="#7f8bb5" font-size="13">$ envdiff .env .env.prod --json - | jq '.summary'</text>
+  <text x="20" y="384" fill="#e6ecff" font-size="13">{ "added": 1, "removed": 1, "changed": 1, "clean": false }</text>
+</svg>
